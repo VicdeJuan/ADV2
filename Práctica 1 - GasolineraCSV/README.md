@@ -1,5 +1,10 @@
 # Práctica 2 — Gasolinera
 
+## Disclaimer
+
+Lo importante de esta solución son las decisiones de diseño y la interfaz. Puede haber algún aspecto del enunciado (caracteres escapados, etc) que no se encuentre terminado de forma completa.
+
+El motivo es poder agilizar las pruebas y poder dedicarnos a lo que verdaderamente importa de esta práctica (buenas prácticas de programación, separación de responsabilidades, etc).
 
 ## 1. Decisiones sobre las clases
 
