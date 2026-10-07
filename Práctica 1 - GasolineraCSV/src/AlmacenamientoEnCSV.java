@@ -37,7 +37,7 @@ public class AlmacenamientoEnCSV implements Almacenamiento {
 
     @Override
     public boolean escribirCliente(Cliente cliente) {
-        try(BufferedWriter bw = Files.newBufferedWriter(archivoClientes, StandardOpenOption.CREATE_NEW){
+        try(BufferedWriter bw = Files.newBufferedWriter(archivoClientes, StandardOpenOption.CREATE_NEW)){
 
             // Respetar el formato CSV.
             bw.write(cliente.toString());

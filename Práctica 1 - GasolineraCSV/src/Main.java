@@ -9,8 +9,8 @@ public class Main {
         System.out.printf("Hello and welcome!");
 
         try {
-            //Almacenamiento almacenamiento = new AlmacenamientoEnCSV();
-            Almacenamiento almacenamiento = new AlmacenamientoEnJSON();
+            Almacenamiento almacenamiento = new AlmacenamientoEnCSV();
+            //Almacenamiento almacenamiento = new AlmacenamientoEnJSON();
         } catch (IOException e) {
             System.out.println("Error al crear el directorio o crear los ficheros. Revisa los permisos");
             throw new RuntimeException(e);
