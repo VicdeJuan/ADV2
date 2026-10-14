@@ -1,0 +1,15 @@
+{"id":1001,"nombre":"Copia del árbol 1001","especie":"Pinus pinea","edad":45,"altura":12.5}
+{"id":2001,"nombre":"Encina de la fuente","especie":"Quercus ilex","edad":60,"altura":8.4}
+{"id":2002,"nombre":"Pino del paseo","especie":"Pinus pinea","edad":25,"altura":11.2}
+{"id":2001,"nombre":"Duplicado que no debe sustituir a la encina","especie":"Quercus ilex","edad":45,"altura":12.5}
+{"id":2003,"nombre":"Olivo incompleto","especie":"Olea europaea","edad":30}
+{"id":2003,"nombre":"Olivo del jardín","especie":"Olea europaea","edad":30,"altura":5.8}
+{"id":2004;"nombre":"JSON con separador incorrecto"}
+{"id":2004,"nombre":"Roble del mirador","especie":"Quercus robur","edad":45,"altura":"alta"}
+{"id":2004,"nombre":"","especie":"Quercus robur","edad":45,"altura":12.5}
+{"id":2004,"nombre":"Arce \"del río\"","especie":"Acer campestre","edad":12,"altura":6.3}
+{"id":2005,"nombre":"Roble del mirador","especie":"Quercus robur","edad":45,"altura":12.5,"zona":"norte"}
+{"id":2005,"nombre":"Roble del mirador","especie":"Quercus robur","edad":-2,"altura":12.5}
+{"id":1100,"nombre":"Copia del árbol 1100","especie":"Quercus robur","edad":45,"altura":12.5}
+{"id":"2006","nombre":"Roble del mirador","especie":"Quercus robur","edad":45,"altura":12.5}
+{"id":2002,"nombre":"Otro duplicado del pino","especie":"Pinus pinea","edad":45,"altura":12.5}

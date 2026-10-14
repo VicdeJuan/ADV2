@@ -1,0 +1,226 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{brailleexamen}
+\usepackage{needspace}
+\tcbuselibrary{breakable}
+
+% Editar los datos y los enunciados antes de utilizar la plantilla.
+% Consultar docs/RAs/acceso-a-datos.json para los identificadores y textos
+% oficiales. La selección de CE y la puntuación son decisiones docentes.
+\newcommand{\cursoacademico}{2026--2027}
+\newcommand{\fechaexamen}{\rule{1.8cm}{0.4pt}}
+\newcommand{\tituloexamen}{B -- Árboles y JSON}
+\newcommand{\duracionexamen}{\rule{1.8cm}{0.4pt}}
+\newcommand{\rasexamen}{RA1 (evaluación global)}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+\setlength{\emergencystretch}{2em}
+\setlist{nosep,topsep=0.3em}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=primary,
+  urlcolor=secondary,
+  pdftitle={Acceso a Datos - Examen B - Árboles y JSON},
+  pdfauthor={Departamento de Informática}
+}
+
+
+% Colores corporativos definidos en brailleexamen: #016D84 y #A3195B.
+\lstdefinestyle{javaexamen}{language=Java,
+  basicstyle=\ttfamily\small, keywordstyle=\bfseries\color{secondary},
+  commentstyle=\itshape\color{muted}, stringstyle=\color{primary},
+  numbers=left, numberstyle=\tiny\color{muted}, numbersep=10pt,
+  xleftmargin=1.5em, framexleftmargin=0.5em,
+  aboveskip=0.8em, belowskip=0.8em, lineskip=2pt,
+  breakatwhitespace=true, showspaces=false}
+\lstset{style=javaexamen}
+\begin{document}
+
+
+{\Large\bfseries\color{primary} IES Luis Braille -- Coslada}\par
+{\small Departamento de Informática}\par
+\vspace{0.2cm}
+
+\begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{2.6cm}|X|}
+  \hline
+  \textbf{Titulación:} & DAM & \textbf{Curso:} & 2.º \\ \hline
+  \textbf{Módulo:} & Acceso a Datos & \textbf{Año:} & \cursoacademico \\ \hline
+  \textbf{Examen:} & \tituloexamen & \textbf{Fecha:} & \fechaexamen \\ \hline
+  \textbf{Duración:} & \duracionexamen & \cellcolor{grisclaro}\textbf{Nota:} & \cellcolor{grisclaro} \\ \hline
+\end{tabularx}
+\begin{tabularx}{\textwidth}{|p{4cm}|X|}
+  \hline
+  \textbf{Nombre y apellidos:} & \\ \hline
+  \textbf{RA:} & \rasexamen \\ \hline
+\end{tabularx}
+
+
+\textbf{Módulo:} Acceso a Datos \textperiodcentered{} 2.º DAM\par
+\textbf{Modalidad:} Práctica individual en ordenador\par
+\textbf{Material permitido:} IDE y autocompletado. \textbf{No se permite consultar apuntes.}\par
+\textbf{Puntuación total:} \textbf{10 puntos}.\par
+
+\section*{\color{primary}1. Contexto y recursos proporcionados}
+
+Vas a desarrollar una aplicación que procesa un inventario de árboles, consulta un árbol a partir de un identificador guardado en un fichero binario y genera nuevos ficheros de salida. Se evalúa globalmente el \textbf{RA1: gestión de información almacenada en ficheros}.\par
+
+Se entrega un \textbf{proyecto Java preparado} que incluye:\par
+
+\begin{itemize}
+\item La clase \texttt{Arbol}, con sus getters, orden natural, \texttt{toJson()} y un \texttt{toString()} legible.
+\item El método \texttt{P\allowbreak{}a\allowbreak{}r\allowbreak{}s\allowbreak{}e\allowbreak{}a\allowbreak{}d\allowbreak{}o\allowbreak{}r\allowbreak{}A\allowbreak{}r\allowbreak{}b\allowbreak{}o\allowbreak{}l\allowbreak{}e\allowbreak{}s\allowbreak{}.\allowbreak{}p\allowbreak{}a\allowbreak{}r\allowbreak{}s\allowbreak{}e\allowbreak{}a\allowbreak{}r\allowbreak{}(\allowbreak{}S\allowbreak{}t\allowbreak{}r\allowbreak{}i\allowbreak{}n\allowbreak{}g\allowbreak{} \allowbreak{}l\allowbreak{}i\allowbreak{}n\allowbreak{}e\allowbreak{}a\allowbreak{})}, que convierte un objeto JSON en un árbol. \textbf{No debes implementarlo ni modificarlo.}
+\item La clase \texttt{OperacionesArboles}, que resuelve la fusión de mapas, la incorporación sin duplicados y la ordenación para la salida.
+\item La petición de la ruta del directorio de salida y la coordinación de los ejercicios, ya implementadas.
+\item Tres ficheros de texto y un fichero binario en \texttt{datos/entrada}.
+\end{itemize}
+
+\begin{tabularx}{\textwidth}{|p{4cm}|X|}\hline
+\rowcolor{primary} \color{white}\bfseries Archivo & \color{white}\bfseries Contenido \\ \hline
+\texttt{arboles1.jsonl} & Un único árbol válido. \\ \hline
+\texttt{arboles2.jsonl} & 200 árboles válidos con IDs diferentes. \\ \hline
+\texttt{arboles3.jsonl} & Árboles válidos, IDs repetidos y líneas incorrectas. \\ \hline
+\texttt{id\_arbol.bin} & Un ID guardado como entero binario de 32 bits. \\ \hline
+\end{tabularx}
+
+\textbf{Formato de texto:} se utiliza \textbf{JSON Lines}, con extensión \texttt{.jsonl}: cada línea contiene un objeto JSON completo y compacto. No hay cabecera, array exterior ni comas entre líneas. Esto permite leer y tratar cada registro de forma independiente. Los ficheros se leen y escriben en \textbf{UTF-8}.\par
+
+Cada árbol contiene exactamente \texttt{id}, \texttt{nombre}, \texttt{especie}, \texttt{edad} y \texttt{altura}. El ID y la edad son enteros; la altura es un número en metros; el nombre y la especie son cadenas. El anexo incluye un ejemplo.\par
+
+\textbf{Comportamiento del parseador:} devuelve un \texttt{Arbol}, lanza \texttt{F\allowbreak{}o\allowbreak{}r\allowbreak{}m\allowbreak{}a\allowbreak{}t\allowbreak{}o\allowbreak{}J\allowbreak{}s\allowbreak{}o\allowbreak{}n\allowbreak{}I\allowbreak{}n\allowbreak{}c\allowbreak{}o\allowbreak{}r\allowbreak{}r\allowbreak{}e\allowbreak{}c\allowbreak{}t\allowbreak{}o\allowbreak{}E\allowbreak{}x\allowbreak{}c\allowbreak{}e\allowbreak{}p\allowbreak{}t\allowbreak{}i\allowbreak{}o\allowbreak{}n} por sintaxis o propiedades incorrectas, lanza \texttt{T\allowbreak{}i\allowbreak{}p\allowbreak{}o\allowbreak{}D\allowbreak{}a\allowbreak{}t\allowbreak{}o\allowbreak{}I\allowbreak{}n\allowbreak{}c\allowbreak{}o\allowbreak{}r\allowbreak{}r\allowbreak{}e\allowbreak{}c\allowbreak{}t\allowbreak{}o\allowbreak{}E\allowbreak{}x\allowbreak{}c\allowbreak{}e\allowbreak{}p\allowbreak{}t\allowbreak{}i\allowbreak{}o\allowbreak{}n} por tipos incorrectos o devuelve \texttt{null} si hay valores de dominio inválidos. Los casos están documentados en el proyecto. No se evalúa el parseo JSON ni la lógica de negocio.\par
+
+\textbf{Convenciones del examen:}\par
+
+\begin{itemize}
+\item Las colecciones de los ejercicios 3 y 5 se guardan en un \texttt{H\allowbreak{}a\allowbreak{}s\allowbreak{}h\allowbreak{}M\allowbreak{}a\allowbreak{}p\allowbreak{}<\allowbreak{}I\allowbreak{}n\allowbreak{}t\allowbreak{}e\allowbreak{}g\allowbreak{}e\allowbreak{}r\allowbreak{},\allowbreak{} \allowbreak{}A\allowbreak{}r\allowbreak{}b\allowbreak{}o\allowbreak{}l\allowbreak{}>} cuya clave es \texttt{arbol.getId()} y cuyo valor es el árbol.
+\item Un árbol está repetido si su ID ya está presente. Se conserva la primera aparición; un registro posterior no debe reemplazarla.
+\item El orden natural es por especie, después nombre y después ID. Un \texttt{HashMap} no garantiza ese orden; usa la ayuda proporcionada al escribir el fichero final.
+\item Se completan exclusivamente los seis métodos \texttt{TODO} de \texttt{ExamenRA1B.java}. No se modifican los datos, el modelo, el parseador ni las clases auxiliares.
+\item Utiliza las rutas y los nombres proporcionados por las constantes del proyecto.
+\end{itemize}
+
+\section*{\color{primary}2. Ejercicios}
+
+\subsection*{\color{secondary}Ejercicio 1. Preparación del directorio de salida  --  1 punto}
+
+La aplicación ya recibe por consola la ruta del directorio de salida y la convierte en un \texttt{Path}.\par
+
+Implementa la gestión de dicha ruta para que:\par
+
+\begin{enumerate}
+\item Compruebe si el directorio existe.
+\item Si no existe, lo cree, incluidos los directorios intermedios necesarios.
+\item Si ya existe y es un directorio, no lo modifique.
+\item Muestre un mensaje indicando si se ha creado, si ya existía o si ha ocurrido un problema.
+\item Si la ruta existe pero \textbf{no es un directorio}, comunique el error y no continúe escribiendo allí.
+\end{enumerate}
+
+Devuelve \texttt{true} únicamente cuando el directorio de salida sea válido.\par
+
+\subsection*{\color{secondary}Ejercicio 2. Lectura de un árbol y escritura de texto  --  1 punto}
+
+Lee \texttt{arboles1.jsonl} utilizando \texttt{P\allowbreak{}a\allowbreak{}r\allowbreak{}s\allowbreak{}e\allowbreak{}a\allowbreak{}d\allowbreak{}o\allowbreak{}r\allowbreak{}A\allowbreak{}r\allowbreak{}b\allowbreak{}o\allowbreak{}l\allowbreak{}e\allowbreak{}s\allowbreak{}.\allowbreak{}p\allowbreak{}a\allowbreak{}r\allowbreak{}s\allowbreak{}e\allowbreak{}a\allowbreak{}r\allowbreak{}(\allowbreak{}.\allowbreak{}.\allowbreak{}.\allowbreak{})}.\par
+
+Crea en el directorio de salida \texttt{arbol1.txt}, con \textbf{únicamente el nombre del árbol} seguido de un salto de línea. Obtén el nombre del objeto \texttt{Arbol}, no de la cadena JSON.\par
+
+Gestiona recursos y errores de lectura y escritura. Devuelve el árbol válido leído para el ejercicio 6; si falla su escritura, conserva ese objeto. Si no se obtiene un árbol válido, devuelve \texttt{null}.\par
+
+\subsection*{\color{secondary}Ejercicio 3. Lectura de un mapa de árboles  --  2 puntos}
+
+Lee \texttt{arboles2.jsonl} y guarda los árboles en un \texttt{H\allowbreak{}a\allowbreak{}s\allowbreak{}h\allowbreak{}M\allowbreak{}a\allowbreak{}p\allowbreak{}<\allowbreak{}I\allowbreak{}n\allowbreak{}t\allowbreak{}e\allowbreak{}g\allowbreak{}e\allowbreak{}r\allowbreak{},\allowbreak{} \allowbreak{}A\allowbreak{}r\allowbreak{}b\allowbreak{}o\allowbreak{}l\allowbreak{}>}.\par
+
+\begin{enumerate}
+\item Utiliza una lectura apropiada para un fichero de texto con varias líneas.
+\item Procesa cada línea con el parseador proporcionado.
+\item Incorpora cada árbol con su ID como clave.
+\item Gestiona los recursos y las excepciones.
+\item Muestra por consola cuántos árboles se han incorporado al mapa.
+\end{enumerate}
+
+\textbf{Resultado esperado con el fichero facilitado:} 200 árboles en el mapa.\par
+
+\subsection*{\color{secondary}Ejercicio 4. Lectura de un ID binario y consulta del árbol  --  1 punto}
+
+El proyecto proporciona \texttt{id\_arbol.bin}. Contiene \textbf{un entero binario de 32 bits}, con el formato que lee \texttt{D\allowbreak{}a\allowbreak{}t\allowbreak{}a\allowbreak{}I\allowbreak{}n\allowbreak{}p\allowbreak{}u\allowbreak{}t\allowbreak{}S\allowbreak{}t\allowbreak{}r\allowbreak{}e\allowbreak{}a\allowbreak{}m\allowbreak{}.\allowbreak{}r\allowbreak{}e\allowbreak{}a\allowbreak{}d\allowbreak{}I\allowbreak{}n\allowbreak{}t\allowbreak{}(\allowbreak{})} (big-endian). No contiene caracteres de texto.\par
+
+\begin{enumerate}
+\item Abre el fichero y lee el número almacenado.
+\item Busca ese ID como clave en el mapa obtenido en el ejercicio 3.
+\item Si existe, imprime el árbol por pantalla utilizando su \texttt{toString()} proporcionado.
+\item Si no existe, informa de que no hay un árbol con ese ID.
+\item Gestiona el cierre del recurso y los errores de lectura, incluido un fichero incompleto, sin impedir que se ejecuten los ejercicios siguientes.
+\end{enumerate}
+
+No debes pedir el ID por consola ni leer el fichero como texto. El archivo facilitado contiene el ID \textbf{1100}, presente en \texttt{arboles2.jsonl}.\par
+
+\subsection*{\color{secondary}Ejercicio 5. Fichero con errores y duplicados  --  2 puntos}
+
+Lee \texttt{arboles3.jsonl} y construye un nuevo \texttt{H\allowbreak{}a\allowbreak{}s\allowbreak{}h\allowbreak{}M\allowbreak{}a\allowbreak{}p\allowbreak{}<\allowbreak{}I\allowbreak{}n\allowbreak{}t\allowbreak{}e\allowbreak{}g\allowbreak{}e\allowbreak{}r\allowbreak{},\allowbreak{} \allowbreak{}A\allowbreak{}r\allowbreak{}b\allowbreak{}o\allowbreak{}l\allowbreak{}>}.\par
+
+En él encontrarás árboles válidos, IDs repetidos \textbf{dentro del fichero 3}, objetos con propiedades ausentes o adicionales, JSON mal formado, campos de tipo incorrecto y valores que hacen que el parseador devuelva \texttt{null}.\par
+
+\begin{enumerate}
+\item Incorpora únicamente árboles válidos y no repetidos, usando el ID como clave.
+\item Conserva la primera aparición de cada ID e ignora los duplicados \textbf{sin reemplazarla}.
+\item Trata separadamente \texttt{F\allowbreak{}o\allowbreak{}r\allowbreak{}m\allowbreak{}a\allowbreak{}t\allowbreak{}o\allowbreak{}J\allowbreak{}s\allowbreak{}o\allowbreak{}n\allowbreak{}I\allowbreak{}n\allowbreak{}c\allowbreak{}o\allowbreak{}r\allowbreak{}r\allowbreak{}e\allowbreak{}c\allowbreak{}t\allowbreak{}o\allowbreak{}E\allowbreak{}x\allowbreak{}c\allowbreak{}e\allowbreak{}p\allowbreak{}t\allowbreak{}i\allowbreak{}o\allowbreak{}n}, \texttt{T\allowbreak{}i\allowbreak{}p\allowbreak{}o\allowbreak{}D\allowbreak{}a\allowbreak{}t\allowbreak{}o\allowbreak{}I\allowbreak{}n\allowbreak{}c\allowbreak{}o\allowbreak{}r\allowbreak{}r\allowbreak{}e\allowbreak{}c\allowbreak{}t\allowbreak{}o\allowbreak{}E\allowbreak{}x\allowbreak{}c\allowbreak{}e\allowbreak{}p\allowbreak{}t\allowbreak{}i\allowbreak{}o\allowbreak{}n} y el caso \texttt{null}.
+\item Informa del número de línea (empezando en 1) y del motivo de cada descarte, incluidos los duplicados.
+\item Continúa con las siguientes líneas tras errores recuperables de un registro.
+\item Muestra al final cuántos árboles válidos se han incorporado.
+\end{enumerate}
+
+No modifiques el parseador ni los ficheros para corregir los datos.\par
+
+\subsection*{\color{secondary}Ejercicio 6. Integración y generación del fichero final  --  3 puntos}
+
+Trabaja con los mapas de los ejercicios 3 y 5 y con el árbol del ejercicio 2. La lógica de integración y ordenación ya está resuelta en \texttt{OperacionesArboles}.\par
+
+\Needspace{6\baselineskip}\textbf{Parte A. Primera generación}\par
+
+\begin{enumerate}
+\item Obtén el mapa combinado con \texttt{O\allowbreak{}p\allowbreak{}e\allowbreak{}r\allowbreak{}a\allowbreak{}c\allowbreak{}i\allowbreak{}o\allowbreak{}n\allowbreak{}e\allowbreak{}s\allowbreak{}A\allowbreak{}r\allowbreak{}b\allowbreak{}o\allowbreak{}l\allowbreak{}e\allowbreak{}s\allowbreak{}.\allowbreak{}c\allowbreak{}o\allowbreak{}m\allowbreak{}b\allowbreak{}i\allowbreak{}n\allowbreak{}a\allowbreak{}r\allowbreak{}(\allowbreak{}a\allowbreak{}r\allowbreak{}b\allowbreak{}o\allowbreak{}l\allowbreak{}e\allowbreak{}s\allowbreak{}2\allowbreak{},\allowbreak{} \allowbreak{}a\allowbreak{}r\allowbreak{}b\allowbreak{}o\allowbreak{}l\allowbreak{}e\allowbreak{}s\allowbreak{}3\allowbreak{})}. Esta ayuda conserva el árbol del fichero 2 cuando un ID está en ambos mapas.
+\item Recorre \texttt{O\allowbreak{}p\allowbreak{}e\allowbreak{}r\allowbreak{}a\allowbreak{}c\allowbreak{}i\allowbreak{}o\allowbreak{}n\allowbreak{}e\allowbreak{}s\allowbreak{}A\allowbreak{}r\allowbreak{}b\allowbreak{}o\allowbreak{}l\allowbreak{}e\allowbreak{}s\allowbreak{}.\allowbreak{}o\allowbreak{}r\allowbreak{}d\allowbreak{}e\allowbreak{}n\allowbreak{}a\allowbreak{}r\allowbreak{}(\allowbreak{}m\allowbreak{}a\allowbreak{}p\allowbreak{}a\allowbreak{})} para obtener los árboles en su orden natural.
+\item Crea \texttt{a\allowbreak{}r\allowbreak{}b\allowbreak{}o\allowbreak{}l\allowbreak{}e\allowbreak{}s\allowbreak{}\_\allowbreak{}o\allowbreak{}r\allowbreak{}d\allowbreak{}e\allowbreak{}n\allowbreak{}a\allowbreak{}d\allowbreak{}o\allowbreak{}s\allowbreak{}.\allowbreak{}j\allowbreak{}s\allowbreak{}o\allowbreak{}n\allowbreak{}l}. Escribe cada árbol en una línea mediante \texttt{arbol.toJson()} y añade un salto de línea.
+\item \textbf{Usa \texttt{S\allowbreak{}t\allowbreak{}a\allowbreak{}n\allowbreak{}d\allowbreak{}a\allowbreak{}r\allowbreak{}d\allowbreak{}O\allowbreak{}p\allowbreak{}e\allowbreak{}n\allowbreak{}O\allowbreak{}p\allowbreak{}t\allowbreak{}i\allowbreak{}o\allowbreak{}n\allowbreak{}.\allowbreak{}C\allowbreak{}R\allowbreak{}E\allowbreak{}A\allowbreak{}T\allowbreak{}E\allowbreak{}\_\allowbreak{}N\allowbreak{}E\allowbreak{}W}} para esta primera creación. Si el fichero ya existe, informa de ello y \textbf{no lo modifiques}.
+\end{enumerate}
+
+\Needspace{6\baselineskip}\textbf{Parte B. Actualización tras incorporar el árbol 1}\par
+
+\begin{enumerate}[start=5]
+\item \textbf{Solo si la Parte A ha creado el fichero y ha terminado su escritura correctamente}, llama a \texttt{O\allowbreak{}p\allowbreak{}e\allowbreak{}r\allowbreak{}a\allowbreak{}c\allowbreak{}i\allowbreak{}o\allowbreak{}n\allowbreak{}e\allowbreak{}s\allowbreak{}A\allowbreak{}r\allowbreak{}b\allowbreak{}o\allowbreak{}l\allowbreak{}e\allowbreak{}s\allowbreak{}.\allowbreak{}i\allowbreak{}n\allowbreak{}c\allowbreak{}o\allowbreak{}r\allowbreak{}p\allowbreak{}o\allowbreak{}r\allowbreak{}a\allowbreak{}r\allowbreak{}S\allowbreak{}i\allowbreak{}A\allowbreak{}u\allowbreak{}s\allowbreak{}e\allowbreak{}n\allowbreak{}t\allowbreak{}e\allowbreak{}(\allowbreak{}m\allowbreak{}a\allowbreak{}p\allowbreak{}a\allowbreak{},\allowbreak{} \allowbreak{}a\allowbreak{}r\allowbreak{}b\allowbreak{}o\allowbreak{}l\allowbreak{}1\allowbreak{})}.
+\item Recorre de nuevo \texttt{O\allowbreak{}p\allowbreak{}e\allowbreak{}r\allowbreak{}a\allowbreak{}c\allowbreak{}i\allowbreak{}o\allowbreak{}n\allowbreak{}e\allowbreak{}s\allowbreak{}A\allowbreak{}r\allowbreak{}b\allowbreak{}o\allowbreak{}l\allowbreak{}e\allowbreak{}s\allowbreak{}.\allowbreak{}o\allowbreak{}r\allowbreak{}d\allowbreak{}e\allowbreak{}n\allowbreak{}a\allowbreak{}r\allowbreak{}(\allowbreak{}m\allowbreak{}a\allowbreak{}p\allowbreak{}a\allowbreak{})}.
+\item Escribe \textbf{otra vez la colección completa} en el mismo fichero, reemplazando su contenido anterior, sin añadir una segunda copia al final.
+\end{enumerate}
+
+\textbf{Importante:} \texttt{CREATE\_NEW} se usa solo en la primera creación. La segunda escritura debe truncar el contenido anterior. Si el fichero existía antes de la Parte A, se omite también la Parte B y el fichero permanece intacto. Si falla la primera escritura, informa y no ejecutes la Parte B.\par
+
+\section*{\color{primary}3. Criterios generales de corrección}
+
+Además del resultado, se valorará dentro de cada ejercicio:\par
+
+\begin{itemize}
+\item Uso adecuado de las API de ficheros y directorios de Java.
+\item Gestión correcta de recursos, usando \texttt{try-with-resources} cuando proceda.
+\item Tratamiento de errores sin silenciarlos ni interrumpir la lectura por errores recuperables de una línea.
+\item Distinción entre texto JSON y el entero almacenado en un fichero binario.
+\item Uso del \texttt{HashMap} con el ID como clave y conservación de la primera aparición.
+\item Cumplimiento de las condiciones de creación y actualización.
+\item Código claro y uso de las ayudas proporcionadas para centrarse en los ficheros.
+\end{itemize}
+
+\begin{tabularx}{\textwidth}{|X|p{4cm}|}\hline
+\rowcolor{primary} \color{white}\bfseries Ejercicio & \color{white}\bfseries Puntuación \\ \hline
+1. Directorio de salida & 1 \\ \hline
+2. Fichero 1: texto & 1 \\ \hline
+3. Fichero 2: HashMap & 2 \\ \hline
+4. Lectura binaria y consulta por ID & 1 \\ \hline
+5. Fichero 3: errores y duplicados & 2 \\ \hline
+6. Integración y fichero final & 3 \\ \hline
+\textbf{Total de los ejercicios} & \textbf{10} \\ \hline
+\end{tabularx}
+\clearpage
+\appendix
+
+\begin{tcolorbox}[title={Resultado de aprendizaje},breakable]
+\textbf{RA1 (texto normativo):} Desarrolla aplicaciones que gestionan información almacenada en ficheros identificando el campo de aplicación de los mismos y utilizando clases específicas.
+\end{tcolorbox}
+
+\end{document}
