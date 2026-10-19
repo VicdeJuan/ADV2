@@ -1,0 +1,7 @@
+.gradle/
+.gradle-user-home/
+build/
+*.db
+*.sqlite
+*.sqlite3
+!gradle/wrapper/gradle-wrapper.jar
