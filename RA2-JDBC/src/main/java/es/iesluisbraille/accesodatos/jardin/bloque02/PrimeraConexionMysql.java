@@ -14,6 +14,7 @@ public final class PrimeraConexionMysql {
         String url = System.getenv("JARDIN_MYSQL_URL");
         String usuario = System.getenv("JARDIN_MYSQL_USER");
         String clave = System.getenv("JARDIN_MYSQL_PASSWORD");
+
         if (url == null || url.isBlank() || usuario == null || usuario.isBlank()) {
             System.err.println("Configura JARDIN_MYSQL_URL y JARDIN_MYSQL_USER.");
             return;

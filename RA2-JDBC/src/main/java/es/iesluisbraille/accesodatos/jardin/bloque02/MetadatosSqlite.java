@@ -14,7 +14,9 @@ public final class MetadatosSqlite {
     }
 
     public static void main(String[] args) {
-        Path archivo = args.length == 0 ? Path.of("data", "jardin-botanico.db") : Path.of(args[0]);
+
+        // Path archivo = args.length == 0 ? Path.of("data", "jardin-botanico.db") : Path.of(args[0]);
+        Path archivo = Path.of("botanico.sqlite");
         if (!Files.isRegularFile(archivo)) {
             System.err.println("No existe la base SQLite: " + archivo.toAbsolutePath());
             return;

@@ -10,8 +10,9 @@ public final class ErrorDeConexion {
     }
 
     public static void main(String[] args) {
-        try (Connection conexion = DriverManager.getConnection("jdbc:desconocido:ejemplo")) {
-            System.out.println("Conexión inesperada: " + conexion);
+        try (Connection conexion = DriverManager
+                .getConnection("jdbc:desconocido:ejemplo")) {
+                        System.out.println("Conexión inesperada: " + conexion);
         } catch (SQLException e) {
             System.out.println("Error esperado: " + e.getMessage());
             System.out.println("Tipo de excepción: " + e.getClass().getSimpleName());

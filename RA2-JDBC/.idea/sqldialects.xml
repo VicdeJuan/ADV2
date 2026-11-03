@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/sql/mysql/01-esquema.sql" dialect="SQLite" />
+    <file url="file://$PROJECT_DIR$/sql/prepararMySQL.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/sql/sqlite/01-esquema.sql" dialect="SQLite" />
+    <file url="file://$PROJECT_DIR$/sql/sqlite/02-datos.sql" dialect="SQLite" />
+  </component>
+</project>
