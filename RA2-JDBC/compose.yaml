@@ -1,0 +1,23 @@
+
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: mysql-acceso-datos
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: practica
+      MYSQL_USER: alumno
+      MYSQL_PASSWORD: alumno123
+    ports:
+      - "127.0.0.1:3307:3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    restart: "no"
+    stop_grace_period: 60s
+
+
+## Para exportar en windows
+# docker compose exec -T mysql mysqldump -ualumno -palumno123  --single-transaction --no-tablespaces --set-gtid-purged=OFF practica > backup\practica.sql
+
+## Para importar en windows:
+# docker compose exec -T mysql mysql -ualumno -palumno123 practica < backup\practica.sql
